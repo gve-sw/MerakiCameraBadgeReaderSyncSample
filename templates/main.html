@@ -1,0 +1,338 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    {% if result[0]['timestamp']!=" " %}
+    <meta http-equiv="refresh" content="5" >
+    {% endif %}
+    <title>Simple ISE Session Manager</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <!-- <link href="https://getbootstrap.com/docs/4.0/examples/cover/cover.css" rel="stylesheet"> -->
+  <link href="https://www.cisco.com/etc/designs/cdc/clientlibs/responsive/css/cisco-sans.min.css" rel="stylesheet">
+    <style type="text/css">
+      /*<!-- body {box-shadow: none} -->
+      <!-- #exampleFormControlFile1{ margin: 0px auto 20px auto; } -->
+      <!-- .footnote{float:left;} -->
+      <!-- .mastfoot { position: fixed;  bottom: 0px; } -->
+      <!-- .cover { margin-top: 8rem; } -->
+      <!-- a.case {text-decoration: underline;} -->
+      <!-- .form-right .form-control{background-color: #4551ae; } -->
+      <!-- .borderless td, .borderless th { border: none !important;}     -->
+      <!-- small a:focus, a:hover { cursor: pointer;} -->
+      <!-- #descrip_length{font-size: 10px;  font-style: italic;text-decoration: underline;} -->
+      <!-- .pred_val{font-weight: bold;  color: #999; font-style: italic;} -->
+      <!-- #myModal { color: #4551ae; } -->*/
+
+    textarea, input {color: #000000;}
+    textarea {
+    resize: none;
+    }
+    #exampleFormControlFile1{ margin: 0px auto 20px auto; }
+      .footnote{float:left;}
+      .mastfoot { position: fixed;  bottom: 0px; }
+      .cover { margin-top: 8rem; }
+      .table-dark td, .table-dark th, .table-dark thead th {  border-color: #32383e; }
+      .btn {margin-top:15px;     margin-left: 25px;}
+      .selected {    background-color: rgba(66, 244, 83, 0.5); }
+      a.case {text-decoration: underline;}
+
+      .spinnerContainer{
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        display: none; /* don't display by default */
+      }
+      .spinner {
+        margin: 100px auto;
+        width: 40px;
+        height: 40px;
+        position: relative;        
+      }
+      .cube1, .cube2 {
+        background-color: #fff;
+        width: 15px;
+        height: 15px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        
+        -webkit-animation: sk-cubemove 1.8s infinite ease-in-out;
+        animation: sk-cubemove 1.8s infinite ease-in-out;
+      }
+
+      .cube2 {
+        -webkit-animation-delay: -0.9s;
+        animation-delay: -0.9s;
+      }
+
+      @-webkit-keyframes sk-cubemove {
+        25% { -webkit-transform: translateX(42px) rotate(-90deg) scale(0.5) }
+        50% { -webkit-transform: translateX(42px) translateY(42px) rotate(-180deg) }
+        75% { -webkit-transform: translateX(0px) translateY(42px) rotate(-270deg) scale(0.5) }
+        100% { -webkit-transform: rotate(-360deg) }
+      }
+
+      @keyframes sk-cubemove {
+        25% { 
+          transform: translateX(42px) rotate(-90deg) scale(0.5);
+          -webkit-transform: translateX(42px) rotate(-90deg) scale(0.5);
+        } 50% { 
+          transform: translateX(42px) translateY(42px) rotate(-179deg);
+          -webkit-transform: translateX(42px) translateY(42px) rotate(-179deg);
+        } 50.1% { 
+          transform: translateX(42px) translateY(42px) rotate(-180deg);
+          -webkit-transform: translateX(42px) translateY(42px) rotate(-180deg);
+        } 75% { 
+          transform: translateX(0px) translateY(42px) rotate(-270deg) scale(0.5);
+          -webkit-transform: translateX(0px) translateY(42px) rotate(-270deg) scale(0.5);
+        } 100% { 
+          transform: rotate(-360deg);
+          -webkit-transform: rotate(-360deg);
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+
+    <div class="site-wrapper">
+
+      <div class="site-wrapper-inner">
+
+        <div class="container">
+
+          <div class="masthead clearfix">
+            <div class="inner">
+     
+<!--        <div class="col-md-3 form-left">
+              <h3 class="masthead-brand"><a href="/"><img src="https://preview.ibb.co/jip0RR/dsx_logo.png" alt="dsx_logo" border="0" height="80"></a></h3>
+        </div>
+        
+        <div class="col-md-6">            
+        </div> -->
+
+        <div class="col-md-3 form-left">
+              <h3 class="masthead-brand"><a href="/"><img src="https://image.ibb.co/chOxny/Logo_8.png" alt="gve_logo" border="0" height="120"></a></h3>
+        </div>
+             
+            </div>            
+          </div> 
+      
+    <div class="col-md-6 form-left">      
+      <table>
+        <tr>
+          <th>Primary Host Name/IP Address:</th>         
+          <td><input type = "text" name="primaryIPinput" id="primaryIPinput" size=45></td>
+        </tr>
+
+        <tr>
+          <th>pxGrid Server CA:</th>         
+          <td><input type = "text" name="pxGridServerCAinput" id="pxGridServerCAinput" size=45></td>
+        </tr>
+
+        <tr>
+          <th>pxGrid Server CA key:</th>         
+          <td><input type = "text" name="pxGridServerCAKeyinput" id="pxGridServerCAKeyinput" size=45></td>
+        </tr>
+        <tr>
+            <th>Device Certificate:</th>         
+            <td><input type = "text" name="deviceCertinput" id="deviceCertinput" size=45></td>
+        </tr>
+        <tr>
+            <th>Client Node Name:</th>         
+            <td><input type = "text" name="clientNodeNameinput" id="clientNodeNameinput" size=45></td>
+        </tr>
+
+      </table>
+
+
+      <div class="form-group" align="left">
+                  <!-- <input type="hidden" id="box1_helper" name="box1_helper"> -->
+                  <button class="btn btn-primary" name="do_start" id="do_start">Start</button>
+                  <button class="btn btn-primary" name="do_stop" id="do_stop">Stop</button>
+                </div>                   
+         
+
+
+
+        <div>
+            <table border = 1 name="sessions_table" id="sessions_table" class="display">
+                <caption>Sessions</caption>
+                <col width="400">
+                <col width="150">
+                <col width="100">
+                <col width="120">
+                <col width="150">
+             {% for label,value in result[0].items() %}
+                <th style="padding:10px"> {{ label }} </th>
+             {% endfor %}
+             {% for dict in result %}
+                <tr class="text_data selected_grey";">
+                  {% for label,value in dict.items() %}
+                      <td style="padding:10px"> {{ value }} </td>                
+                  {% endfor %}
+                </tr>
+             {% endfor %}
+             </table>
+        </div> 
+
+        <div class="form-group" align="left">
+          <!-- <input type="hidden" id="box1_helper" name="box1_helper"> -->
+          <button class="btn btn-primary" name="do_resetsessions" id="do_resetsessions">Reset Selected Session</button>
+        </div>        
+
+        
+          <div class="spinnerContainer">
+            <div class="spinner">
+              <div class="cube1"></div>
+              <div class="cube2"></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+   <script  src="https://code.jquery.com/jquery-3.3.1.min.js"  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="  crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+   
+    
+
+    <script>
+
+
+$("#sessions_table tr").click(function(){
+   $(this).addClass('selected').siblings().removeClass('selected');    
+});
+
+$('.ok').on('click', function(e){
+    alert($("#sessions_table tr.selected td:first").html());
+});
+
+
+$('#do_start').click(function(){
+
+  $('.spinnerContainer').show();     
+
+//data_to_be_sent = 'box1_helper='+document.getElementById("box1_helper").value;
+data_to_be_sent = 'primaryIPinput='+document.getElementById("primaryIPinput").value+"&"+'pxGridServerCAinput='+document.getElementById("pxGridServerCAinput").value+"&"+'pxGridServerCAKeyinput='+document.getElementById("pxGridServerCAKeyinput").value+"&"+'deviceCertinput='+document.getElementById("deviceCertinput").value+"&"+'clientNodeNameinput='+document.getElementById("clientNodeNameinput").value;
+
+    
+$.ajax({
+
+           url: '/DoStart', 
+             data: data_to_be_sent, 
+             type: 'POST', 
+             // Return results, and update the Deal Id, lead time, SLA, Tier 
+             success: function(response) { 
+                console.log("AJAX Response: ",response);                
+
+                //Assign values returned by the Python script to Box2 here            
+                // value is in response.sessions and response.value2;
+                //document.getElementById("box2").value=response.value2;
+                console.log(response)
+                document.open();
+                document.write(response);
+                document.close();
+             }, 
+              error: function(error) {
+                console.log(error);
+            },
+            complete: function(){
+              $('.spinnerContainer').hide();
+            }
+        })
+        
+    });    
+
+$('#do_stop').click(function(){
+$('.spinnerContainer').show();     
+data_to_be_sent = 'primaryIPinput='+document.getElementById("primaryIPinput").value+"&"+'pxGridServerCAinput='+document.getElementById("pxGridServerCAinput").value+"&"+'pxGridServerCAKeyinput='+document.getElementById("pxGridServerCAKeyinput").value+"&"+'deviceCertinput='+document.getElementById("deviceCertinput").value+"&"+'clientNodeNameinput='+document.getElementById("clientNodeNameinput").value;
+$.ajax({
+
+         url: '/DoStop', 
+           data: data_to_be_sent, 
+           type: 'POST', 
+           // Return results, and update the Deal Id, lead time, SLA, Tier 
+           success: function(response) { 
+              console.log("AJAX Response: ",response);                
+
+              //Assign values returned by the Python script to Box2 here            
+              // value is in response.sessions and response.value2;
+              //document.getElementById("box2").value=response.value2;
+              console.log(response)
+              document.open();
+              document.write(response);
+              document.close();
+           }, 
+            error: function(error) {
+              console.log(error);
+          },
+          complete: function(){
+            $('.spinnerContainer').hide();
+          }
+      })
+      
+  });    
+
+$('#do_resetsessions').click(function(){
+$('.spinnerContainer').show();   
+// need to populate data_to_be_sent  with a list of IP Addresses for the sessions to reset?  
+//data_to_be_sent = 'primaryIPinput='+document.getElementById("primaryIPinput").value+"&"+'pxGridServerCAinput='+document.getElementById("pxGridServerCAinput").value+"&"+'pxGridServerCAKeyinput='+document.getElementById("pxGridServerCAKeyinput").value+"&"+'deviceCertinput='+document.getElementById("deviceCertinput").value+"&"+'clientNodeNameinput='+document.getElementById("clientNodeNameinput").value;
+data_to_be_sent = $("#sessions_table tr.selected td:nth-child(4)").html();
+//alert($("#sessions_table tr.selected td:nth-child(4)").html());
+alert(data_to_be_sent);
+
+$.ajax({
+
+         url: '/DoResetSessions', 
+           data: data_to_be_sent, 
+           type: 'POST', 
+           // Return results, and update the Deal Id, lead time, SLA, Tier 
+           success: function(response) { 
+              console.log("AJAX Response: ",response);                
+
+              //Assign values returned by the Python script to Box2 here            
+              // value is in response.sessions and response.value2;
+              //document.getElementById("box2").value=response.value2;
+              console.log(response)
+              document.open();
+              document.write(response);
+              document.close();
+           }, 
+            error: function(error) {
+              console.log(error);
+          },
+          complete: function(){
+            $('.spinnerContainer').hide();
+          }
+      })
+      
+  });  
+
+
+  </script>
+  </body>
+</html>
+
