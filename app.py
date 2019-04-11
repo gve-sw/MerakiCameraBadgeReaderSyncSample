@@ -6,6 +6,8 @@ from simplepam import authenticate
 import asyncio
 import time
 from threading import Thread
+import requests
+import json
 
 
 import config as c
@@ -116,9 +118,30 @@ def doResetSessions():
     print(primaryTimeStamp)
     print(primaryUserID)
 
+
+    url = "https://api.meraki.com/api/v0/networks/L_578149602163689741/cameras/Q2BV-9M5M-F37E/snapshot"
+
+    querystring = {"timestamp":primaryTimeStamp}
+
+    payload = ""
+    headers = {
+        'X-Cisco-Meraki-API-Key': "958d329c3db472219a4f5e69ffa26db09a6d58db",
+        'cache-control': "no-cache",
+        'Postman-Token': "4b84ec0e-ed70-40fa-9603-fb56ce5f42d1"
+    }
+
+    response = requests.request("POST", url, data=payload, headers=headers, params=querystring)
+
+    print(response.text)
+    theURLDict = json.loads(response.text)
+    print(theURLDict["url"])
+
+    #wait for the URL to be valid
+    time.sleep(5)
+
     #Then return it to HTML
 #    return jsonify({'status': 'OK', 'value2': value2});
-    return render_template('screenshot.html',result=[primaryTimeStamp,primaryUserID])
+    return render_template('screenshot.html',result=[theURLDict["url"],primaryUserID])
 
 @app.route('/DoOK', methods=['POST'])
 def goBackMain():
