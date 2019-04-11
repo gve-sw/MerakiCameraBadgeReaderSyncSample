@@ -8,6 +8,7 @@ import time
 from threading import Thread
 import requests
 import json
+import os
 
 
 import config as c
@@ -123,9 +124,11 @@ def doResetSessions():
 
     querystring = {"timestamp":primaryTimeStamp}
 
+    meraki_key = os.environ.get('MERAKI_KEY', None)
+
     payload = ""
     headers = {
-        'X-Cisco-Meraki-API-Key': "958d329c3db472219a4f5e69ffa26db09a6d58db",
+        'X-Cisco-Meraki-API-Key': meraki_key,
         'cache-control': "no-cache",
         'Postman-Token': "4b84ec0e-ed70-40fa-9603-fb56ce5f42d1"
     }
