@@ -10,6 +10,8 @@ from threading import Thread
 
 import config as c
 
+#badge reader sync with Meraki cameras
+
 isConnected=False
 i=0
 
@@ -39,8 +41,7 @@ app.secret_key = c.secret_key
 bcrypt = Bcrypt(app)
 auth = HTTPBasicAuth()
 
-latestMessagesList=[{'timestamp': " ", 'state': " ", 'userName': " ", 'ipAddresses': " ", 'macAddress': " "}]
-
+latestMessagesList=[{'timestamp': "2019-04-03T14:55:58-06:00", 'state': " ", 'userName': "aortega", 'ipAddresses': " ", 'macAddress': " "}]
 
 @auth.verify_password
 def verify_pw(username, password):
@@ -67,6 +68,9 @@ def startShowingSessions():
 
     #testing with values sent from the HTML template
     primaryIPinput=request.form['primaryIPinput']
+
+    primaryTimeStamp=request.form['primaryTimeStamp']
+
     pxGridServerCAinput=request.form['pxGridServerCAinput']
     pxGridServerCAKeyinput=request.form['pxGridServerCAKeyinput']
     deviceCertinput=request.form['deviceCertinput']
@@ -103,19 +107,27 @@ def stopShowingSessions():
 
 @app.route('/DoResetSessions', methods=['POST'])
 def doResetSessions():
-    global isConnected
-    global latestMessagesList
+    primaryTimeStamp=request.form['primaryTimeStamp']
+    primaryUserID=request.form['primaryUserID']
 
     #Here we will bring up another form to reset sessions that have been selected
 
-    #print(request.form)
-    #latestMessagesList=[{'timestamp': " ", 'state': " ", 'userName': " ", 'ipAddresses': " ", 'macAddress': " "}]
-    #isConnected=False
+    print(request.form)
+    print(primaryTimeStamp)
+    print(primaryUserID)
+
+    #Then return it to HTML
+#    return jsonify({'status': 'OK', 'value2': value2});
+    return render_template('screenshot.html',result=[primaryTimeStamp,primaryUserID])
+
+@app.route('/DoOK', methods=['POST'])
+def goBackMain():
+    print(request.form)
+    global latestMessagesList
 
     #Then return it to HTML
 #    return jsonify({'status': 'OK', 'value2': value2});
     return render_template('main.html',result=latestMessagesList)
-
 
 if __name__ == "__main__":
 	#app.run(threaded=True)

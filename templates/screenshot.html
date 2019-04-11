@@ -117,47 +117,19 @@
 
           <div class="masthead clearfix">
             <div class="inner">
-     
-<!--        <div class="col-md-3 form-left">
-              <h3 class="masthead-brand"><a href="/"><img src="https://preview.ibb.co/jip0RR/dsx_logo.png" alt="dsx_logo" border="0" height="80"></a></h3>
-        </div>
-        
-        <div class="col-md-6">            
-        </div> -->
-
-        <div class="col-md-3 form-left">
-              <h3 class="masthead-brand"><a href="/"><img src="https://image.ibb.co/chOxny/Logo_8.png" alt="gve_logo" border="0" height="120"></a></h3>
-        </div>
-             
+                {{result[0]}}
+                {{result[1]}}
+                <a href="/"><img src="https://spn9.meraki.com/stream/jpeg/snapshot/82f60add399b996aVHMGNjNWJjYTgxNjMxYWRhODk0ZGI4MDkxZDM1MzNkODZjMGZiNDFlZGM2Y2VmYmNmY2I1NjY2YjI5NWJiMzg5YQ7VVABZxr9vc0ofNbRDlWoszji5V8GumhN8gBlgU6fOByKJVpdIWBSZ3UehXaH6ZHdGFaveNPqIwe7jvFu8r-5WSQgd_2PcJqS2oJeSPFp8s4oMKiWIgQMg3Exhneh6dIu2vGjq3M-kzyd5n2MepGZ2Ey_CPHP22EOiLhspIs-zWZ89KvJKw6QOFlKc6SWskUPOaPpXzb8V5mg5I49hbUbkslBCL4rP1z49MgvUT2BC" alt="gve_logo" border="0" height="120"></a>
             </div>            
           </div> 
       
     <div class="col-md-6 form-left">      
 
-        <div>
-            <table border = 1 name="sessions_table" id="sessions_table" class="display">
-                <caption>Badge In Events</caption>
-                <col width="400">
-                <col width="150">
-                <col width="100">
-                <col width="120">
-                <col width="150">
-             {% for label,value in result[0].items() %}
-                <th style="padding:10px"> {{ label }} </th>
-             {% endfor %}
-             {% for dict in result %}
-                <tr class="text_data selected_grey";">
-                  {% for label,value in dict.items() %}
-                      <td style="padding:10px"> {{ value }} </td>                
-                  {% endfor %}
-                </tr>
-             {% endfor %}
-             </table>
-        </div> 
+
 
         <div class="form-group" align="left">
           <!-- <input type="hidden" id="box1_helper" name="box1_helper"> -->
-          <button class="btn btn-primary" name="do_resetsessions" id="do_resetsessions">Retrieve Snapshot</button>
+          <button class="btn btn-primary" name="do_ok" id="do_ok">OK</button>
         </div>        
 
         
@@ -185,15 +157,6 @@
     
 
     <script>
-
-
-$("#sessions_table tr").click(function(){
-   $(this).addClass('selected').siblings().removeClass('selected');    
-});
-
-$('.ok').on('click', function(e){
-    alert($("#sessions_table tr.selected td:first").html());
-});
 
 
 $('#do_start').click(function(){
@@ -261,18 +224,14 @@ $.ajax({
       
   });    
 
-$('#do_resetsessions').click(function(){
+$('#do_ok').click(function(){
 $('.spinnerContainer').show();   
-// need to populate data_to_be_sent  with a list of IP Addresses for the sessions to reset?  
-//data_to_be_sent = 'primaryIPinput='+document.getElementById("primaryIPinput").value+"&"+'pxGridServerCAinput='+document.getElementById("pxGridServerCAinput").value+"&"+'pxGridServerCAKeyinput='+document.getElementById("pxGridServerCAKeyinput").value+"&"+'deviceCertinput='+document.getElementById("deviceCertinput").value+"&"+'clientNodeNameinput='+document.getElementById("clientNodeNameinput").value;
-data_to_be_sent = 'primaryTimeStamp='+$("#sessions_table tr.selected td:nth-child(1)").html()+"&"+'primaryUserID='+$("#sessions_table tr.selected td:nth-child(3)").html();
-//alert($("#sessions_table tr.selected td:nth-child(4)").html());
+data_to_be_sent = '';
 
-//alert(data_to_be_sent);
 
 $.ajax({
 
-         url: '/DoResetSessions', 
+         url: '/DoOK', 
            data: data_to_be_sent, 
            type: 'POST', 
            // Return results, and update the Deal Id, lead time, SLA, Tier 
