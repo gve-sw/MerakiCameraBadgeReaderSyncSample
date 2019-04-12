@@ -44,7 +44,7 @@ app.secret_key = c.secret_key
 bcrypt = Bcrypt(app)
 auth = HTTPBasicAuth()
 
-latestMessagesList=[{'timestamp': "2019-04-03T14:55:58-06:00", 'state': " ", 'userName': "aortega", 'ipAddresses': " ", 'macAddress': " "}]
+latestMessagesList=[{'timestamp': "2019-04-12T11:40:33-06:00", 'state': " ", 'UserID': "86543202", 'ipAddresses': " ", 'macAddress': " "},{'timestamp': "2019-04-12T11:32:33-06:00", 'state': " ", 'UserID': "86543201", 'ipAddresses': " ", 'macAddress': " "},{'timestamp': "2019-04-12T11:33:36-06:00", 'state': " ", 'UserID': "85063685", 'ipAddresses': " ", 'macAddress': " "}]
 
 @auth.verify_password
 def verify_pw(username, password):
@@ -120,7 +120,7 @@ def doResetSessions():
     print(primaryUserID)
 
 
-    url = "https://api.meraki.com/api/v0/networks/L_578149602163689741/cameras/Q2BV-9M5M-F37E/snapshot"
+    url = "https://api.meraki.com/api/v0/networks/L_578149602163689741/cameras/Q2BV-7E5Q-ZZ2X/snapshot"
 
     querystring = {"timestamp":primaryTimeStamp}
 
@@ -140,7 +140,7 @@ def doResetSessions():
     print(theURLDict["url"])
 
     #wait for the URL to be valid
-    time.sleep(5)
+    time.sleep(7)
 
     #Then return it to HTML
 #    return jsonify({'status': 'OK', 'value2': value2});
