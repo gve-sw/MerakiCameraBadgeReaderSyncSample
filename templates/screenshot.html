@@ -158,70 +158,7 @@
     <script>
 
 
-$('#do_start').click(function(){
 
-  $('.spinnerContainer').show();     
-
-//data_to_be_sent = 'box1_helper='+document.getElementById("box1_helper").value;
-data_to_be_sent = 'primaryIPinput='+document.getElementById("primaryIPinput").value+"&"+'pxGridServerCAinput='+document.getElementById("pxGridServerCAinput").value+"&"+'pxGridServerCAKeyinput='+document.getElementById("pxGridServerCAKeyinput").value+"&"+'deviceCertinput='+document.getElementById("deviceCertinput").value+"&"+'clientNodeNameinput='+document.getElementById("clientNodeNameinput").value;
-
-    
-$.ajax({
-
-           url: '/DoStart', 
-             data: data_to_be_sent, 
-             type: 'POST', 
-             // Return results, and update the Deal Id, lead time, SLA, Tier 
-             success: function(response) { 
-                console.log("AJAX Response: ",response);                
-
-                //Assign values returned by the Python script to Box2 here            
-                // value is in response.sessions and response.value2;
-                //document.getElementById("box2").value=response.value2;
-                console.log(response)
-                document.open();
-                document.write(response);
-                document.close();
-             }, 
-              error: function(error) {
-                console.log(error);
-            },
-            complete: function(){
-              $('.spinnerContainer').hide();
-            }
-        })
-        
-    });    
-
-$('#do_stop').click(function(){
-$('.spinnerContainer').show();     
-data_to_be_sent = 'primaryIPinput='+document.getElementById("primaryIPinput").value+"&"+'pxGridServerCAinput='+document.getElementById("pxGridServerCAinput").value+"&"+'pxGridServerCAKeyinput='+document.getElementById("pxGridServerCAKeyinput").value+"&"+'deviceCertinput='+document.getElementById("deviceCertinput").value+"&"+'clientNodeNameinput='+document.getElementById("clientNodeNameinput").value;
-$.ajax({
-
-         url: '/DoStop', 
-           data: data_to_be_sent, 
-           type: 'POST', 
-           // Return results, and update the Deal Id, lead time, SLA, Tier 
-           success: function(response) { 
-              console.log("AJAX Response: ",response);                
-
-              //Assign values returned by the Python script to Box2 here            
-              // value is in response.sessions and response.value2;
-              //document.getElementById("box2").value=response.value2;
-              console.log(response)
-              document.open();
-              document.write(response);
-              document.close();
-           }, 
-            error: function(error) {
-              console.log(error);
-          },
-          complete: function(){
-            $('.spinnerContainer').hide();
-          }
-      })
-      
-  });    
 
 $('#do_ok').click(function(){
 $('.spinnerContainer').show();   

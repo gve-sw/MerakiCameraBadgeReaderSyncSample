@@ -157,7 +157,7 @@
 
         <div class="form-group" align="left">
           <!-- <input type="hidden" id="box1_helper" name="box1_helper"> -->
-          <button class="btn btn-primary" name="do_resetsessions" id="do_resetsessions">Retrieve Snapshot</button>
+          <button class="btn btn-primary" name="do_retrievesnapshot" id="do_retrievesnapshot">Retrieve Snapshot</button>
         </div>        
 
         
@@ -196,83 +196,14 @@ $('.ok').on('click', function(e){
 });
 
 
-$('#do_start').click(function(){
-
-  $('.spinnerContainer').show();     
-
-//data_to_be_sent = 'box1_helper='+document.getElementById("box1_helper").value;
-data_to_be_sent = 'primaryIPinput='+document.getElementById("primaryIPinput").value+"&"+'pxGridServerCAinput='+document.getElementById("pxGridServerCAinput").value+"&"+'pxGridServerCAKeyinput='+document.getElementById("pxGridServerCAKeyinput").value+"&"+'deviceCertinput='+document.getElementById("deviceCertinput").value+"&"+'clientNodeNameinput='+document.getElementById("clientNodeNameinput").value;
-
-    
-$.ajax({
-
-           url: '/DoStart', 
-             data: data_to_be_sent, 
-             type: 'POST', 
-             // Return results, and update the Deal Id, lead time, SLA, Tier 
-             success: function(response) { 
-                console.log("AJAX Response: ",response);                
-
-                //Assign values returned by the Python script to Box2 here            
-                // value is in response.sessions and response.value2;
-                //document.getElementById("box2").value=response.value2;
-                console.log(response)
-                document.open();
-                document.write(response);
-                document.close();
-             }, 
-              error: function(error) {
-                console.log(error);
-            },
-            complete: function(){
-              $('.spinnerContainer').hide();
-            }
-        })
-        
-    });    
-
-$('#do_stop').click(function(){
-$('.spinnerContainer').show();     
-data_to_be_sent = 'primaryIPinput='+document.getElementById("primaryIPinput").value+"&"+'pxGridServerCAinput='+document.getElementById("pxGridServerCAinput").value+"&"+'pxGridServerCAKeyinput='+document.getElementById("pxGridServerCAKeyinput").value+"&"+'deviceCertinput='+document.getElementById("deviceCertinput").value+"&"+'clientNodeNameinput='+document.getElementById("clientNodeNameinput").value;
-$.ajax({
-
-         url: '/DoStop', 
-           data: data_to_be_sent, 
-           type: 'POST', 
-           // Return results, and update the Deal Id, lead time, SLA, Tier 
-           success: function(response) { 
-              console.log("AJAX Response: ",response);                
-
-              //Assign values returned by the Python script to Box2 here            
-              // value is in response.sessions and response.value2;
-              //document.getElementById("box2").value=response.value2;
-              console.log(response)
-              document.open();
-              document.write(response);
-              document.close();
-           }, 
-            error: function(error) {
-              console.log(error);
-          },
-          complete: function(){
-            $('.spinnerContainer').hide();
-          }
-      })
-      
-  });    
-
-$('#do_resetsessions').click(function(){
+$('#do_retrievesnapshot').click(function(){
 $('.spinnerContainer').show();   
-// need to populate data_to_be_sent  with a list of IP Addresses for the sessions to reset?  
-//data_to_be_sent = 'primaryIPinput='+document.getElementById("primaryIPinput").value+"&"+'pxGridServerCAinput='+document.getElementById("pxGridServerCAinput").value+"&"+'pxGridServerCAKeyinput='+document.getElementById("pxGridServerCAKeyinput").value+"&"+'deviceCertinput='+document.getElementById("deviceCertinput").value+"&"+'clientNodeNameinput='+document.getElementById("clientNodeNameinput").value;
-data_to_be_sent = 'primaryTimeStamp='+$("#sessions_table tr.selected td:nth-child(1)").html()+"&"+'primaryUserID='+$("#sessions_table tr.selected td:nth-child(3)").html();
-//alert($("#sessions_table tr.selected td:nth-child(4)").html());
-
-//alert(data_to_be_sent);
+// need to populate data_to_be_sent  with TimeStamp and UserID of row selected  
+data_to_be_sent = 'primaryTimeStamp='+$("#sessions_table tr.selected td:nth-child(1)").html()+"&"+'primaryUserID='+$("#sessions_table tr.selected td:nth-child(2)").html();
 
 $.ajax({
 
-         url: '/DoResetSessions', 
+         url: '/DoRetrieveSnapshot', 
            data: data_to_be_sent, 
            type: 'POST', 
            // Return results, and update the Deal Id, lead time, SLA, Tier 
