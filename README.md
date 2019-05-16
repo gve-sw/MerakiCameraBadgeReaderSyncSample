@@ -68,7 +68,7 @@ entry and clicking on the Retrieve Snapshot button, the snapshot page should be 
 
 ### Screenshots
 
-Main page with badge entre selection:
+Main page with badge entry selection:
 
 ![Main Page](MainPageScreenshot.png)
 
