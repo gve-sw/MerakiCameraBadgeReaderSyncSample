@@ -54,7 +54,7 @@ camera_serial = 'CAMERA-SERIAL'
 
 ### Running the sample
 
-Once you have entered the correct Meraki API key in the newly created **config.py** file, you should
+Once you have entered the correct Meraki API key, Meraki Network ID and camera serial in the newly created **config.py** file, you should
 be able to start the Flash application by running the app.py script:
 
 ```
@@ -62,4 +62,14 @@ python3 app.py
 ```
 
 Then open a browser and point to localhost port 5000 (https://0.0.0.0:5000)
-You will first be prompted to authenticate using credentials on the system you are executing the script from
+You will first be prompted to authenticate using user credentials for a user on the system from where you are
+executing the script. Once you get past authentication, you will see the main screen as show below and, after selecting an
+entry and clicking on the Retrieve Snapshot button, the snapshot page should be shown as depicted further below.
+
+### Screenshots
+
+Main page with badge entre selection:
+![Main Page](MainPageScreenshot.png)
+
+Result after retrieving snapshot:
+![Snaptshot](SnapshotDirectoryScreenshot.png)
